@@ -48,8 +48,8 @@
     <maven.compiler.target>1.7</maven.compiler.target>
     <commons.componentid>imaging</commons.componentid>
     <commons.module.name>org.apache.commons.imaging</commons.module.name>
-    <commons.release.version>1.0</commons.release.version>
-    <commons.rc.version>RC5</commons.rc.version>
+    <commons.release.version>1.0-alpha</commons.release.version>
+    <commons.rc.version>RC1</commons.rc.version>
     <commons.jira.id>IMAGING</commons.jira.id>
     <commons.jira.pid>12313421</commons.jira.pid>
     <commons.osgi.export>org.apache.commons.imaging.*;version=${project.version};-noimport:=true</commons.osgi.export>
