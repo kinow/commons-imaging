@@ -38,7 +38,8 @@ public class AsciiFieldTest extends ExifBaseTest {
 
     @Test
     public void testSingleImage() throws Exception {
-        final File imageFile = getTestImageByName("Canon Powershot SD750 - 2007.12.26.n.IMG_3704.JPG");
+        final File imageFile = new File(AsciiFieldTest
+                .class.getResource("/images/jpeg/jpeg-with-metadata-with-ascii-fields.jpg").getFile());
 
         final Map<String, Object> params = new HashMap<>();
 

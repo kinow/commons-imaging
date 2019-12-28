@@ -42,11 +42,6 @@ public abstract class ImagingTest {
         return getTestImage(null);
     }
 
-    protected File getTestImageByName(final String fileName)
-            throws IOException, ImageReadException {
-        return getTestImage(file -> file.getName().equals(fileName));
-    }
-
     protected File getTestImage(final ImageFilter filter) throws IOException,
             ImageReadException {
         final List<File> images = getTestImages(filter, 1);
