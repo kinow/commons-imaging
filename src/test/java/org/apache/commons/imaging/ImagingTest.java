@@ -38,10 +38,6 @@ public abstract class ImagingTest {
         boolean accept(File file) throws IOException, ImageReadException;
     }
 
-    protected File getTestImage() throws IOException, ImageReadException {
-        return getTestImage(null);
-    }
-
     protected File getTestImage(final ImageFilter filter) throws IOException,
             ImageReadException {
         final List<File> images = getTestImages(filter, 1);
