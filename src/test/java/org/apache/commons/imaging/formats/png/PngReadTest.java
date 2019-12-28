@@ -26,8 +26,8 @@ import java.util.List;
 
 import org.apache.commons.imaging.ImageInfo;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.Predicates;
 import org.apache.commons.imaging.common.ImageMetadata;
-import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,14 +35,12 @@ public class PngReadTest extends PngBaseTest {
 
     @Test
     public void test() throws Exception {
-        Debug.debug("start");
 
         final List<File> images = getPngImages();
         for (int i = 0; i < images.size(); i++) {
 
             final File imageFile = images.get(i);
-            Debug.debug("imageFile", imageFile);
-            if (isInvalidPNGTestFile(imageFile)) {
+            if (Predicates.IS_PNG.test(imageFile)) {
                 try {
                     Imaging.getMetadata(imageFile);
                     fail("Image read should have failed.");
@@ -66,8 +64,6 @@ public class PngReadTest extends PngBaseTest {
 
                 final ImageInfo imageInfo = Imaging.getImageInfo(imageFile);
                 assertNotNull(imageInfo);
-
-                Debug.debug("ICC profile", Imaging.getICCProfile(imageFile));
 
                 final BufferedImage image = Imaging.getBufferedImage(imageFile);
                 assertNotNull(image);

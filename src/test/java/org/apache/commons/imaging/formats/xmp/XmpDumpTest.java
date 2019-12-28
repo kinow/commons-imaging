@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingTest;
+import org.apache.commons.imaging.Predicates;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ public class XmpDumpTest extends ImagingTest {
         for (final File imageFile : images) {
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
-                    && isInvalidPNGTestFile(imageFile)) {
+                    && Predicates.IS_PNG.test(imageFile)) {
                 continue;
             }
 

@@ -104,9 +104,4 @@ public abstract class ImagingTest {
 
         return images;
     }
-
-    protected boolean isInvalidPNGTestFile(final File file) {
-        return (file.getParentFile().getName().equalsIgnoreCase("pngsuite") &&
-                file.getName().toLowerCase().startsWith("x"));
-    }
 }

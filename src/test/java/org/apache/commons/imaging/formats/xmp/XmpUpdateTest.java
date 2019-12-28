@@ -30,7 +30,7 @@ import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.ImagingConstants;
 import org.apache.commons.imaging.ImagingTest;
-import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.Predicates;
 import org.junit.jupiter.api.Test;
 
 public class XmpUpdateTest extends ImagingTest {
@@ -41,12 +41,9 @@ public class XmpUpdateTest extends ImagingTest {
         for (final File imageFile : images) {
 
             if (imageFile.getName().toLowerCase().endsWith(".png")
-                    && isInvalidPNGTestFile(imageFile)) {
+                    && Predicates.IS_PNG.test(imageFile)) {
                 continue;
             }
-
-            Debug.debug("imageFile", imageFile);
-            Debug.debug();
 
             final ImageFormat imageFormat = Imaging.guessFormat(imageFile);
 
@@ -92,10 +89,6 @@ public class XmpUpdateTest extends ImagingTest {
             assertNotNull(xmpXmlOut);
 
             assertEquals(xmpXmlOut, xmpXml);
-
-            // Debug.debug("xmpXmlOut", xmpXmlOut.length());
-            // Debug.debug("xmpXml", xmpXml);
-            // Debug.debug();
         }
     }
 }

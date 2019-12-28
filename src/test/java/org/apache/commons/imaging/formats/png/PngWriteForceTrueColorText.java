@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.Predicates;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +40,7 @@ public class PngWriteForceTrueColorText extends PngBaseTest {
         for (final File imageFile : images) {
 
             try {
-                if (isInvalidPNGTestFile(imageFile)) {
+                if (Predicates.IS_PNG.test(imageFile)) {
                     continue;
                 }
 

@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.apache.commons.imaging.ImageFormats;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.internal.Debug;
+import org.apache.commons.imaging.Predicates;
 import org.junit.jupiter.api.Test;
 
 public class ConvertPngToGifTest extends PngBaseTest {
@@ -39,26 +39,20 @@ public class ConvertPngToGifTest extends PngBaseTest {
         for (int i = 0; i < images.size(); i++) {
 
             final File imageFile = images.get(i);
-            if (isInvalidPNGTestFile(imageFile))
-             {
+            if (Predicates.IS_PNG.test(imageFile)) {
                 continue;
-            // Debug.debug("imageFile", imageFile);
-            // Debug.debug();
             }
 
             final Map<String, Object> params = new HashMap<>();
-            // params.put(ImagingConstants.PARAM_KEY_VERBOSE, Boolean.TRUE);
 
             final BufferedImage image = Imaging.getBufferedImage(imageFile, params);
             assertNotNull(image);
 
             final File outFile = File.createTempFile(imageFile.getName() + ".", ".gif");
-            // Debug.debug("outFile", outFile);
 
             Imaging.writeImage(image, outFile, ImageFormats.GIF,
                     params);
         }
-        Debug.debug("complete.");
     }
 
 }
