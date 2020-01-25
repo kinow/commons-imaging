@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.commons.imaging.formats.jpeg.specific;
+package org.apache.commons.imaging.formats.jpeg;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,7 +40,7 @@ public class JpegImageParserTest {
     @Test
     public void testGetBufferedImage10() throws ImageReadException, IOException {
         final File imageFile = new File(
-                JpegDecoderTest.class.getResource("/IMAGING-136/1402522741337.jpg")
+                JpegDecoderTest.class.getResource("/images/jpeg/IMAGING-136/1402522741337.jpg")
                 .getFile());
         final JpegImageParser parser = new JpegImageParser();
         final BufferedImage image = parser.getBufferedImage(new ByteSourceFile(imageFile), null);

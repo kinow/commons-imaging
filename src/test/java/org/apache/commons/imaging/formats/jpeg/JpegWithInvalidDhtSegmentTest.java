@@ -36,7 +36,7 @@ public class JpegWithInvalidDhtSegmentTest {
         // we cannot use ImagingTest and getImageByFileName, as it would cause others
         // tests to fail
         final File imageFile = new File(JpegWithInvalidDhtSegmentTest.class
-                .getResource("/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg")
+                .getResource("/images/jpeg/IMAGING-215/ArrayIndexOutOfBoundsException_DhtSegment_79.jpeg")
                 .getFile());
         Assertions.assertThrows(ImageReadException.class, () -> {
             Imaging.getMetadata(imageFile, Collections.<String, Object>emptyMap());

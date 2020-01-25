@@ -40,7 +40,7 @@ public class JpegDecoderTest {
     public void testDecodeBadFile() throws ImageReadException, IOException {
         // From IMAGING-220
         final File inputFile = new File(
-                JpegDecoderTest.class.getResource("/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg")
+                JpegDecoderTest.class.getResource("/images/jpeg/IMAGING-220/timeout-48eb4251935b4ca8b26d1859ea525c1b42ae0c78.jpeg")
                         .getFile());
         final ByteSourceFile byteSourceFile = new ByteSourceFile(inputFile);
         Assertions.assertThrows(ImageReadException.class, () -> {

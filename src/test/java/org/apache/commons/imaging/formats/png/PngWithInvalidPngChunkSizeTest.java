@@ -45,7 +45,7 @@ public class PngWithInvalidPngChunkSizeTest {
 	@Test
 	public void testPngWithInvalidPngChunkSize() throws IOException, ImageReadException {
 		final File imageFile = new File(
-				JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-211/testfile_2.png").getFile());
+				JpegWithInvalidDhtSegmentTest.class.getResource("/images/png/IMAGING-211/testfile_2.png").getFile());
 		final Map<String, Object> params = new HashMap<>();
 		params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY, new ManagedImageBufferedImageFactory());
 		Assertions.assertThrows(ImageReadException.class, () -> {
@@ -63,7 +63,7 @@ public class PngWithInvalidPngChunkSizeTest {
     @Test
     public void testPngWithInvalidNegativePngChunkSize() throws IOException, ImageReadException {
         final File imageFile = new File(
-                JpegWithInvalidDhtSegmentTest.class.getResource("/IMAGING-210/testfile.png").getFile());
+                JpegWithInvalidDhtSegmentTest.class.getResource("/images/png/IMAGING-210/testfile.png").getFile());
         final Map<String, Object> params = new HashMap<>();
         params.put(ImagingConstants.BUFFERED_IMAGE_FACTORY, new ManagedImageBufferedImageFactory());
         Assertions.assertThrows(ImageReadException.class, () -> {
