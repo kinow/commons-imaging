@@ -35,9 +35,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
@@ -71,7 +69,7 @@ import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFi
 import org.apache.commons.imaging.formats.png.transparencyfilters.TransparencyFilterTrueColor;
 import org.apache.commons.imaging.icc.IccProfileParser;
 
-public class PngImageParser extends ImageParser  implements XmpEmbeddable {
+public class PngImageParser extends ImageParser<PngImagingParameters>  implements XmpEmbeddable<PngImagingParameters> {
 
     private static final Logger LOGGER = Logger.getLogger(PngImageParser.class.getName());
 
@@ -238,7 +236,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
     }
 
     @Override
-    public byte[] getICCProfileBytes(final ByteSource byteSource, final Map<String, Object> params)
+    public byte[] getICCProfileBytes(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iCCP },
                 true);
@@ -260,7 +258,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
     }
 
     @Override
-    public Dimension getImageSize(final ByteSource byteSource, final Map<String, Object> params)
+    public Dimension getImageSize(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.IHDR, }, true);
 
@@ -278,7 +276,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
     }
 
     @Override
-    public ImageMetadata getMetadata(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageMetadata getMetadata(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.tEXt, ChunkType.zTXt, }, false);
 
@@ -330,7 +328,7 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
     }
 
     @Override
-    public ImageInfo getImageInfo(final ByteSource byteSource, final Map<String, Object> params)
+    public ImageInfo getImageInfo(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] {
                 ChunkType.IHDR,
@@ -487,14 +485,8 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
     }
 
     @Override
-    public BufferedImage getBufferedImage(final ByteSource byteSource, Map<String, Object> params)
+    public BufferedImage getBufferedImage(final ByteSource byteSource, PngImagingParameters params)
             throws ImageReadException, IOException {
-        params = (params == null) ? new HashMap<>() : new HashMap<>(params);
-
-        // if (params.size() > 0) {
-        // Object firstKey = params.keySet().iterator().next();
-        // throw new ImageWriteException("Unknown parameter: " + firstKey);
-        // }
 
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] {
                 ChunkType.IHDR,
@@ -710,13 +702,13 @@ public class PngImageParser extends ImageParser  implements XmpEmbeddable {
     }
 
     @Override
-    public void writeImage(final BufferedImage src, final OutputStream os, final Map<String, Object> params)
+    public void writeImage(final BufferedImage src, final OutputStream os, final PngImagingParameters params)
             throws ImageWriteException, IOException {
         new PngWriter().writeImage(src, os, params);
     }
 
     @Override
-    public String getXmpXml(final ByteSource byteSource, final Map<String, Object> params)
+    public String getXmpXml(final ByteSource byteSource, final PngImagingParameters params)
             throws ImageReadException, IOException {
 
         final List<PngChunk> chunks = readChunks(byteSource, new ChunkType[] { ChunkType.iTXt }, false);
