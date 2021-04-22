@@ -22,14 +22,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import org.apache.commons.imaging.ImageReadException;
 import org.apache.commons.imaging.ImageWriteException;
 import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
+import org.apache.commons.imaging.ImagingParameters;
 import org.apache.commons.imaging.common.RgbBufferedImageFactory;
 import org.apache.commons.imaging.internal.Debug;
 import org.junit.jupiter.params.provider.Arguments;
@@ -43,12 +41,12 @@ public class RoundtripBase {
                 + formatInfo.format.getExtension());
         Debug.debug("tempFile: " + temp1.getName());
 
-        final Map<String, Object> params = new HashMap<>();
-        Imaging.writeImage(testImage, temp1, formatInfo.format, params);
+        final ImagingParameters params = new ImagingParameters();
+        params.setImageFormat(formatInfo.format);
+        Imaging.writeImage(testImage, temp1, params);
 
-        final Map<String, Object> readParams = new HashMap<>();
-        readParams.put(ImagingConstants.BUFFERED_IMAGE_FACTORY,
-                new RgbBufferedImageFactory());
+        final ImagingParameters readParams = new ImagingParameters();
+        readParams.setBufferedImageFactory(new RgbBufferedImageFactory());
         final BufferedImage image2 = Imaging.getBufferedImage(temp1, readParams);
         assertNotNull(image2);
 
@@ -62,7 +60,7 @@ public class RoundtripBase {
             final File temp2 = File.createTempFile(tempPrefix + ".", "."
                     + formatInfo.format.getExtension());
             // Debug.debug("tempFile: " + tempFile.getName());
-            Imaging.writeImage(image2, temp2, formatInfo.format, params);
+            Imaging.writeImage(image2, temp2, params);
 
             ImageAsserts.assertEquals(temp1, temp2);
         }
