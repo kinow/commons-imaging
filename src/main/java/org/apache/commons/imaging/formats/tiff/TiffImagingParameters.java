@@ -12,7 +12,6 @@
  *  limitations under the License.
  *  under the License.
  */
-
 package org.apache.commons.imaging.formats.tiff;
 
 import org.apache.commons.imaging.ImageFormats;
@@ -22,49 +21,55 @@ import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 /**
  * Tiff format parameters.
+ *
  * @since 1.0-alpha3
  */
 public class TiffImagingParameters extends XmpImagingParameters {
 
     /**
-     * Indicates whether to read embedded thumbnails or not. Only applies to read EXIF metadata from JPEG/JFIF files.
+     * Indicates whether to read embedded thumbnails or not. Only applies to
+     * read EXIF metadata from JPEG/JFIF files.
      *
-     * <p>Default value is {@code true}.</p>
+     * <p>
+     * Default value is {@code true}.</p>
      */
     private boolean readThumbnails = true;
 
     /**
-     * User provided {@code TiffOutputSet} used to write into the image's EXIF metadata.
+     * User provided {@code TiffOutputSet} used to write into the image's EXIF
+     * metadata.
      */
     private TiffOutputSet exif = null;
+
 
     /**
      * X-coordinate of a sub-image.
      */
-    private Integer subImageX = null;
+    private int subImageX;
 
     /**
      * Y-coordinate of a sub-image.
      */
-    private Integer subImageY = null;
+    private int subImageY;
 
     /**
      * Width of a sub-image.
      */
-    private Integer subImageWidth = null;
+    private int subImageWidth;
 
     /**
      * Height of a sub-image.
      */
-    private Integer subImageHeight = null;
+    private int subImageHeight;
 
     /**
-     * Specifies that an application-specified photometric interpreter
-     * is to be used when reading TIFF files to convert raster data samples
-     * to RGB values for the output image.
+     * Specifies that an application-specified photometric interpreter is to be
+     * used when reading TIFF files to convert raster data samples to RGB values
+     * for the output image.
      *
-     * <p>The value supplied with this key should be a valid instance of
-     * a class that implements PhotometricInterpreter.</p>
+     * <p>
+     * The value supplied with this key should be a valid instance of a class
+     * that implements PhotometricInterpreter.</p>
      */
     private PhotometricInterpreter customPhotometricInterpreter = null;
 
@@ -74,27 +79,29 @@ public class TiffImagingParameters extends XmpImagingParameters {
     private Integer compression = null;
 
     /**
-     * Specifies the amount of memory in bytes to be used for a strip
-     * or tile size when employing LZW compression.  The default is
-     * 8000 (roughly 8K). Minimum value is 8000.
+     * Specifies the amount of memory in bytes to be used for a strip or tile
+     * size when employing LZW compression. The default is 8000 (roughly 8K).
+     * Minimum value is 8000.
      */
     private Integer lzwCompressionBlockSize = null;
 
     /**
-     * Used in write operations to indicate the desired T.4 options to
-     * use when using TIFF_COMPRESSION_CCITT_GROUP_3.
+     * Used in write operations to indicate the desired T.4 options to use when
+     * using TIFF_COMPRESSION_CCITT_GROUP_3.
      *
-     * <p>Valid values: any Integer containing a mixture of the
-     * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE,
-     * and TIFF_FLAG_T4_OPTIONS_FILL flags.</p>
+     * <p>
+     * Valid values: any Integer containing a mixture of the
+     * TIFF_FLAG_T4_OPTIONS_2D, TIFF_FLAG_T4_OPTIONS_UNCOMPRESSED_MODE, and
+     * TIFF_FLAG_T4_OPTIONS_FILL flags.</p>
      */
     private Integer t4Options = null;
 
     /**
-     * Used in write operations to indicate the desired T.6 options to
-     * use when using TIFF_COMPRESSION_CCITT_GROUP_4.
+     * Used in write operations to indicate the desired T.6 options to use when
+     * using TIFF_COMPRESSION_CCITT_GROUP_4.
      *
-     * <p>Valid values: any Integer containing either zero or
+     * <p>
+     * Valid values: any Integer containing either zero or
      * TIFF_FLAG_T6_OPTIONS_UNCOMPRESSED_MODE.</p>
      */
     private Integer t6Options = null;
@@ -119,36 +126,62 @@ public class TiffImagingParameters extends XmpImagingParameters {
         this.exif = exif;
     }
 
-    public Integer getSubImageX() {
+    /**
+     * Sets parameters for performing a partial read operation on an image. This
+     * method is useful for reducing memory and run-time overhead when accessing
+     * large source images.
+     *
+     * @param x pixel coordinate of the upper-left corner of the source image
+     * @param y pixel coordinate of the upper-left corner of the source image
+     * @param width width of the image subset to be read
+     * @param height height of the image subset to be read
+     */
+    public void setSubImage(int x, int y, int width, int height) {
+        if(x<0 || y<0){
+            throw new IllegalArgumentException(
+                    "Invalid sub-image specification: negative x and y values not allowed");
+        }
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException(
+                    "Invalid sub-image specification width and height must be greater than zero");
+        }
+        subImageX = x;
+        subImageY = y;
+        subImageWidth = width;
+        subImageHeight = height;
+    }
+
+    /**
+     * Clears settings for sub-image.  Subsequent read operations will retrieve
+     * the entire image.
+     */
+    public void clearSubImage(){
+        subImageWidth=0;
+        subImageHeight=0;
+    }
+    /**
+     * Indicates whether the application has set sub-image parameters.
+     *
+     * @return true if the sub-image parameters are set; otherwise, false.
+     */
+    public boolean isSubImageSet() {
+        return subImageWidth > 0 && subImageHeight > 0;
+    }
+
+    public int getSubImageX() {
         return subImageX;
     }
 
-    public void setSubImageX(Integer subImageX) {
-        this.subImageX = subImageX;
-    }
-
-    public Integer getSubImageY() {
+    public int getSubImageY() {
         return subImageY;
     }
 
-    public void setSubImageY(Integer subImageY) {
-        this.subImageY = subImageY;
-    }
-
-    public Integer getSubImageWidth() {
+    public int getSubImageWidth() {
         return subImageWidth;
     }
 
-    public void setSubImageWidth(Integer subImageWidth) {
-        this.subImageWidth = subImageWidth;
-    }
-
-    public Integer getSubImageHeight() {
+    public int getSubImageHeight() {
         return subImageHeight;
-    }
-
-    public void setSubImageHeight(Integer subImageHeight) {
-        this.subImageHeight = subImageHeight;
     }
 
     public PhotometricInterpreter getCustomPhotometricInterpreter() {
